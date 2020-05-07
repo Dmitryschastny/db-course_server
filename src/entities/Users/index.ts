@@ -12,7 +12,12 @@ import { Settings } from '../Settings';
 @Index('users_pk', ['id'], { unique: true })
 @Entity('Users', { schema: 'public' })
 export class Users {
-  @Column('integer', { primary: true, name: 'id' })
+  @Column('integer', {
+    primary: true,
+    unique: true,
+    generated: 'increment',
+    name: 'id',
+  })
   public id: number;
 
   @Column('character varying', { name: 'name', nullable: true })
