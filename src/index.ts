@@ -1,6 +1,7 @@
 // import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { Request, Response } from 'express';
+import * as cors from 'cors';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { AppRoutes } from './routes';
@@ -9,12 +10,15 @@ import { AppRoutes } from './routes';
 // note that it's not active database connection
 // TypeORM creates connection pools and uses them for your requests
 
-const run = async () => {
+const start = async () => {
   await createConnection();
 
   try {
     // create express app
     const app = express();
+
+    app.use(cors());
+
     app.use(bodyParser.json());
 
     // register all application routes
@@ -39,4 +43,4 @@ const run = async () => {
   }
 };
 
-run();
+start();

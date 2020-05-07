@@ -5,7 +5,8 @@
   "username": "postgres",
   "password": "12345678",
   "database": "ORMTest",
-  "synchronize": true,
+  "__comment__": "Set to false for the first time, then false",
+  "synchronize": false,
   "entities": [
     "src/entities/**/*.ts"
   ],
