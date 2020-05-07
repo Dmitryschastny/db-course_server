@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+// import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { Request, Response } from 'express';
 import * as express from 'express';
@@ -8,8 +8,11 @@ import { AppRoutes } from './routes';
 // create connection with database
 // note that it's not active database connection
 // TypeORM creates connection pools and uses them for your requests
-createConnection()
-  .then(async (connection) => {
+
+const run = async () => {
+  await createConnection();
+
+  try {
     // create express app
     const app = express();
     app.use(bodyParser.json());
@@ -31,5 +34,9 @@ createConnection()
     app.listen(3000);
 
     console.log('Express application is up and running on port 3000');
-  })
-  .catch((error) => console.log('TypeORM connection error: ', error));
+  } catch (error) {
+    console.log('TypeORM connection error: ', error);
+  }
+};
+
+run();

@@ -1,0 +1,32 @@
+[
+  {
+    "resultsPath": "C:\\Dev\\_My\\bd-course\\server\\output",
+    "pluralizeNames": true,
+    "noConfigs": false,
+    "convertCaseFile": "pascal",
+    "convertCaseEntity": "pascal",
+    "convertCaseProperty": "camel",
+    "convertEol": "CRLF",
+    "propertyVisibility": "public",
+    "lazy": false,
+    "activeRecord": false,
+    "generateConstructor": false,
+    "customNamingStrategyPath": "",
+    "relationIds": false,
+    "strictMode": "none",
+    "skipSchema": false,
+    "indexFile": false,
+    "exportType": "named"
+  },
+  {
+    "host": "127.0.0.1",
+    "port": 5432,
+    "databaseName": "TestTest",
+    "user": "postgres",
+    "password": "12345678",
+    "databaseType": "postgres",
+    "schemaName": "public",
+    "ssl": false,
+    "skipTables": []
+  }
+]

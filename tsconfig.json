@@ -2,8 +2,7 @@
     "version": "2.4.2",
     "compilerOptions": {
         "lib": ["es5", "es6"],
-        "target": "es6",
-        "module": "ES2020",
+        "target": "ESNext",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,

@@ -4,10 +4,10 @@
   "port": 5432,
   "username": "postgres",
   "password": "12345678",
-  "database": "TestTest",
+  "database": "ORMTest",
   "synchronize": true,
   "entities": [
-    "src/entity/*.ts"
+    "src/entities/**/*.ts"
   ],
   "subscribers": [
     "src/subscriber/*.ts"
@@ -16,7 +16,7 @@
     "src/migration/*.ts"
   ],
   "cli": {
-    "entitiesDir": "src/entity",
+    "entitiesDir": "src/entities",
     "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
   }
