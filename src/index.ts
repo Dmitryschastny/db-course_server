@@ -1,10 +1,11 @@
 // import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { AppRoutes } from './routes';
+import { validateToken } from './utils/middlewares';
 
 // create connection with database
 // note that it's not active database connection
@@ -23,15 +24,28 @@ const start = async () => {
 
     // register all application routes
     AppRoutes.forEach((route) => {
-      app[route.method](
-        route.path,
-        (request: Request, response: Response, next: Function) => {
-          route
-            .action(request, response)
-            .then(() => next)
-            .catch((err) => next(err));
+      const registerRoute = async (
+        request: Request,
+        response: Response,
+        next: Function
+      ) => {
+        try {
+          await route.action(request, response);
+          next();
+        } catch (error) {
+          next(error);
         }
-      );
+      };
+
+      const middlewares: RequestHandler[] = [];
+
+      if (route.protected) {
+        middlewares.push(validateToken);
+      }
+
+      middlewares.push(registerRoute);
+
+      app[route.method](route.path, ...middlewares);
     });
 
     // run app

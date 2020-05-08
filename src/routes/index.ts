@@ -5,6 +5,7 @@ export type Route = {
   path: string;
   method: 'get' | 'post' | 'put' | 'delete';
   action(request: Request, response: Response): Promise<any>;
+  protected?: boolean;
 };
 
 export type CreateRoutes = (base: string) => Route[];

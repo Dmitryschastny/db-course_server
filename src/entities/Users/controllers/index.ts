@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
 import { Users } from '..';
+import * as jwt from 'jsonwebtoken';
 
 /**
  * Saves given user.
@@ -79,7 +80,15 @@ const auth = async (request: Request, response: Response) => {
     return;
   }
 
-  response.send(user);
+  const payload = { email };
+  const secret = process.env.JWT_SECRET;
+  const options = {
+    expiresIn: '2d',
+    issuer: 'http://localhost:3000',
+  };
+  const token = jwt.sign(payload, secret, options);
+
+  response.send({ token });
 };
 
 export { create, getAll, getById, auth };

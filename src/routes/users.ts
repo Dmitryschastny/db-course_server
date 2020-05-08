@@ -6,11 +6,13 @@ export const createRoutes: CreateRoutes = (base: string): Route[] => [
     path: `/${base}`,
     method: 'get',
     action: getAll,
+    protected: true,
   },
   {
     path: `/${base}/:id`,
     method: 'get',
     action: getById,
+    protected: true,
   },
   {
     path: `/${base}`,
