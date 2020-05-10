@@ -4,9 +4,9 @@
   "port": 5432,
   "username": "postgres",
   "password": "12345678",
-  "database": "ORMTest",
+  "database": "CourseProject",
   "__comment__": "Set to false for the first time, then false",
-  "synchronize": false,
+  "synchronize": true,
   "entities": [
     "src/entities/**/*.ts"
   ],

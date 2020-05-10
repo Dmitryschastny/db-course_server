@@ -10,6 +10,9 @@ export class Languages {
   @Column('character varying', { name: 'name', nullable: true })
   public name: string | null;
 
+  @Column('character varying', { name: 'code', nullable: false })
+  public code: string;
+
   @OneToMany(() => Settings, (settings) => settings.language)
   public settings: Settings[];
 }
