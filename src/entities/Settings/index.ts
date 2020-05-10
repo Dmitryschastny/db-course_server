@@ -19,13 +19,16 @@ export class Settings {
   @Column('boolean', { name: 'usePin', nullable: true })
   public usePin: boolean | null;
 
+  @Column('integer', { name: 'pin' })
+  public pin: number;
+
   @ManyToOne(() => Languages, (languages) => languages.settings)
   @JoinColumn([{ name: 'languageId', referencedColumnName: 'id' }])
   public language: Languages;
 
   @ManyToOne(() => Currencies, (currencies) => currencies.settings)
   @JoinColumn([{ name: 'mainСurrency', referencedColumnName: 'id' }])
-  public mainUrrency: Currencies;
+  public mainCurrency: Currencies;
 
   @OneToMany(() => Users, (users) => users.settings)
   public users: Users[];

@@ -20,9 +20,6 @@ export class Users {
   })
   public id: number;
 
-  @Column('character varying', { name: 'name', nullable: true })
-  public name: string | null;
-
   @Column('character varying', { name: 'email', nullable: true })
   public email: string | null;
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
 import { Users } from '..';
 import * as jwt from 'jsonwebtoken';
+import { VerifiedRequest } from '../../../types';
 
 /**
  * Saves given user.
@@ -91,4 +92,30 @@ const auth = async (request: Request, response: Response) => {
   response.send({ token });
 };
 
-export { create, getAll, getById, auth };
+/**
+ * Return user by token
+ */
+const me = async (request: VerifiedRequest, response: Response) => {
+  const {
+    decoded: { email },
+  } = request;
+
+  const usersRepository = getManager().getRepository(Users);
+  const user = await usersRepository.findOne(null, {
+    select: ['id', 'email'],
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    response.status(404);
+    response.end();
+
+    return;
+  }
+
+  response.send({ user });
+};
+
+export { create, getAll, getById, auth, me };

@@ -1,5 +1,11 @@
 import { Route, CreateRoutes } from '.';
-import { create, getAll, getById, auth } from '../entities/Users/controllers';
+import {
+  create,
+  getAll,
+  getById,
+  auth,
+  me,
+} from '../entities/Users/controllers';
 
 export const createRoutes: CreateRoutes = (base: string): Route[] => [
   {
@@ -23,5 +29,11 @@ export const createRoutes: CreateRoutes = (base: string): Route[] => [
     path: `/auth`,
     method: 'post',
     action: auth,
+  },
+  {
+    path: '/me',
+    method: 'post',
+    action: me,
+    protected: true,
   },
 ];

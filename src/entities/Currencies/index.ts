@@ -31,7 +31,7 @@ export class Currencies {
   )
   public exchangeRates2: ExchangeRates[];
 
-  @OneToMany(() => Settings, (settings) => settings.mainUrrency)
+  @OneToMany(() => Settings, (settings) => settings.mainCurrency)
   public settings: Settings[];
 
   @OneToMany(() => Transactions, (transactions) => transactions.currency)
