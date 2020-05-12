@@ -16,24 +16,18 @@ export class Currencies {
   @Column('character varying', { name: 'code', nullable: true })
   public code: string | null;
 
-  @OneToMany(() => Accounts, (accounts) => accounts.currency)
+  @OneToMany(() => Accounts, accounts => accounts.currency)
   public accounts: Accounts[];
 
-  @OneToMany(
-    () => ExchangeRates,
-    (exchangeRates) => exchangeRates.sourceCurrency
-  )
+  @OneToMany(() => ExchangeRates, exchangeRates => exchangeRates.sourceCurrency)
   public exchangeRates: ExchangeRates[];
 
-  @OneToMany(
-    () => ExchangeRates,
-    (exchangeRates) => exchangeRates.targetCurrency
-  )
+  @OneToMany(() => ExchangeRates, exchangeRates => exchangeRates.targetCurrency)
   public exchangeRates2: ExchangeRates[];
 
-  @OneToMany(() => Settings, (settings) => settings.mainCurrency)
+  @OneToMany(() => Settings, settings => settings.mainCurrency)
   public settings: Settings[];
 
-  @OneToMany(() => Transactions, (transactions) => transactions.currency)
+  @OneToMany(() => Transactions, transactions => transactions.currency)
   public transactions: Transactions[];
 }
