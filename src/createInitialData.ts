@@ -16,7 +16,7 @@ const createInitialData = async () => {
 
     await languagesRepository.save(
       languagesRepository.create({
-        name: 'Russian',
+        name: 'Русский',
         code: 'RU',
       })
     );
