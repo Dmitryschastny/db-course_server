@@ -116,10 +116,8 @@ const me = async (request: VerifiedRequest, response: Response) => {
     where: {
       email,
     },
-    relations: ['settings'],
+    relations: ['settings', 'settings.language'],
   });
-
-  console.log(user);
 
   if (!user) {
     response.status(404);
@@ -128,7 +126,7 @@ const me = async (request: VerifiedRequest, response: Response) => {
     return;
   }
 
-  response.send({ user, settings });
+  response.send({ user, language: settings.language });
 };
 
 export { create, getAll, getById, auth, me };
