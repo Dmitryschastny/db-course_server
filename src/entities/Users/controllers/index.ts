@@ -4,6 +4,7 @@ import { getManager } from 'typeorm';
 import { Users } from '..';
 import * as jwt from 'jsonwebtoken';
 import { VerifiedRequest } from '../../../types';
+import { Languages } from '../../Languages';
 
 /**
  * Saves given user.
@@ -24,8 +25,13 @@ const create = async (request: Request, response: Response) => {
     return;
   }
 
+  const languagesRepository = getManager().getRepository(Languages);
+  const defaultLanguage = await languagesRepository.findOne({
+    where: { code: 'EN' },
+  });
+
   const settingsRepository = getManager().getRepository(Settings);
-  const settings = settingsRepository.create();
+  const settings = settingsRepository.create({ language: defaultLanguage });
 
   const newUser = usersRepository.create({ ...request.body, settings });
 
@@ -105,12 +111,15 @@ const me = async (request: VerifiedRequest, response: Response) => {
   } = request;
 
   const usersRepository = getManager().getRepository(Users);
-  const user = await usersRepository.findOne(null, {
-    select: ['id', 'email'],
+  const { settings, ...user } = await usersRepository.findOne(null, {
+    select: ['id', 'email', 'settings'],
     where: {
       email,
     },
+    relations: ['settings'],
   });
+
+  console.log(user);
 
   if (!user) {
     response.status(404);
@@ -119,7 +128,7 @@ const me = async (request: VerifiedRequest, response: Response) => {
     return;
   }
 
-  response.send({ user });
+  response.send({ user, settings });
 };
 
 export { create, getAll, getById, auth, me };

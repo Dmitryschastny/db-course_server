@@ -1,10 +1,16 @@
-import { Column, Entity, Index, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Settings } from '../Settings';
 
 @Index('languages_pk', ['id'], { unique: true })
 @Entity('Languages', { schema: 'public' })
 export class Languages {
-  @Column('integer', { primary: true, name: 'id' })
+  @PrimaryGeneratedColumn()
   public id: number;
 
   @Column('character varying', { name: 'name', nullable: true })
@@ -13,6 +19,6 @@ export class Languages {
   @Column('character varying', { name: 'code', nullable: false })
   public code: string;
 
-  @OneToMany(() => Settings, (settings) => settings.language)
+  @OneToMany(() => Settings, settings => settings.language)
   public settings: Settings[];
 }

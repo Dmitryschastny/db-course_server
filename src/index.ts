@@ -6,6 +6,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { AppRoutes } from './routes';
 import { validateToken } from './utils/middlewares';
+import { createInitialData } from './createInitialData';
 
 const start = async () => {
   await createConnection();
@@ -14,9 +15,9 @@ const start = async () => {
     const app = express();
 
     app.use(cors());
-
     app.use(bodyParser.json());
-    AppRoutes.forEach((route) => {
+
+    AppRoutes.forEach(route => {
       const registerRoute = async (
         request: Request,
         response: Response,
@@ -42,6 +43,7 @@ const start = async () => {
     });
 
     app.listen(3000);
+    createInitialData();
 
     console.log('Express application is up and running on port 3000');
   } catch (error) {

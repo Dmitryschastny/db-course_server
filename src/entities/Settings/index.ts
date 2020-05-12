@@ -26,6 +26,6 @@ export class Settings {
   public language: Languages;
 
   @ManyToOne(() => Currencies, currencies => currencies.settings)
-  @JoinColumn([{ name: 'mainСurrency', referencedColumnName: 'id' }])
+  @JoinColumn([{ name: 'mainCurrency', referencedColumnName: 'id' }])
   public mainCurrency: Currencies;
 }
