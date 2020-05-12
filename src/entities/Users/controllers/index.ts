@@ -1,3 +1,4 @@
+import { Settings } from './../../Settings/index';
 import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
 import { Users } from '..';
@@ -23,7 +24,10 @@ const create = async (request: Request, response: Response) => {
     return;
   }
 
-  const newUser = usersRepository.create(request.body);
+  const settingsRepository = getManager().getRepository(Settings);
+  const settings = settingsRepository.create();
+
+  const newUser = usersRepository.create({ ...request.body, settings });
 
   await usersRepository.save(newUser);
 

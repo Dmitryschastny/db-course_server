@@ -8,7 +8,8 @@ module.exports = {
     "eslint-config-prettier", // Disable conflicting ruls
     'eslint-config-prettier/@typescript-eslint',
     // Enable prettier plugin to run Prettier as an ESLint rule
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   parser: '@typescript-eslint/parser',
   plugins: [

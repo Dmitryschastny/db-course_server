@@ -4,32 +4,28 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Languages } from '../Languages';
 import { Currencies } from '../Currencies';
-import { Users } from '../Users';
 
 @Index('settings_pk', ['id'], { unique: true })
 @Entity('Settings', { schema: 'public' })
 export class Settings {
-  @Column('integer', { primary: true, name: 'id' })
+  @PrimaryGeneratedColumn()
   public id: number;
 
   @Column('boolean', { name: 'usePin', nullable: true })
   public usePin: boolean | null;
 
-  @Column('integer', { name: 'pin' })
+  @Column('integer', { name: 'pin', nullable: true })
   public pin: number;
 
-  @ManyToOne(() => Languages, (languages) => languages.settings)
+  @ManyToOne(() => Languages, languages => languages.settings)
   @JoinColumn([{ name: 'languageId', referencedColumnName: 'id' }])
   public language: Languages;
 
-  @ManyToOne(() => Currencies, (currencies) => currencies.settings)
+  @ManyToOne(() => Currencies, currencies => currencies.settings)
   @JoinColumn([{ name: 'mainСurrency', referencedColumnName: 'id' }])
   public mainCurrency: Currencies;
-
-  @OneToMany(() => Users, (users) => users.settings)
-  public users: Users[];
 }

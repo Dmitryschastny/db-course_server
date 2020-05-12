@@ -3,8 +3,9 @@ import {
   Entity,
   Index,
   JoinColumn,
-  ManyToOne,
   OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Accounts } from '../Accounts';
 import { Settings } from '../Settings';
@@ -12,12 +13,7 @@ import { Settings } from '../Settings';
 @Index('users_pk', ['id'], { unique: true })
 @Entity('Users', { schema: 'public' })
 export class Users {
-  @Column('integer', {
-    primary: true,
-    unique: true,
-    generated: 'increment',
-    name: 'id',
-  })
+  @PrimaryGeneratedColumn()
   public id: number;
 
   @Column('character varying', { name: 'email', nullable: true })
@@ -26,13 +22,11 @@ export class Users {
   @Column('character varying', { name: 'password', nullable: true })
   public password: string | null;
 
-  @Column('integer', { name: 'pin', nullable: true })
-  public pin: number | null;
-
-  @OneToMany(() => Accounts, (accounts) => accounts.user)
-  public accounts: Accounts[];
-
-  @ManyToOne(() => Settings, (settings) => settings.users)
+  @OneToOne(() => Settings, { cascade: true })
   @JoinColumn([{ name: 'settingsId', referencedColumnName: 'id' }])
   public settings: Settings;
+
+  //
+  @OneToMany(() => Accounts, accounts => accounts.user)
+  public accounts: Accounts[];
 }

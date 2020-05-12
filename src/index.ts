@@ -7,22 +7,15 @@ import * as bodyParser from 'body-parser';
 import { AppRoutes } from './routes';
 import { validateToken } from './utils/middlewares';
 
-// create connection with database
-// note that it's not active database connection
-// TypeORM creates connection pools and uses them for your requests
-
 const start = async () => {
   await createConnection();
 
   try {
-    // create express app
     const app = express();
 
     app.use(cors());
 
     app.use(bodyParser.json());
-
-    // register all application routes
     AppRoutes.forEach((route) => {
       const registerRoute = async (
         request: Request,
@@ -48,7 +41,6 @@ const start = async () => {
       app[route.method](route.path, ...middlewares);
     });
 
-    // run app
     app.listen(3000);
 
     console.log('Express application is up and running on port 3000');
