@@ -10,6 +10,6 @@ export class Countries {
   @Column('character varying', { name: 'name', nullable: true })
   public name: string | null;
 
-  @OneToMany(() => Banks, (banks) => banks.country)
+  @OneToMany(() => Banks, banks => banks.country)
   public banks: Banks[];
 }

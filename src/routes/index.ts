@@ -3,6 +3,7 @@ import { createRoutes as createUsersRoutes } from './users';
 import { createRoutes as createLanguagesRoutes } from './languages';
 import { createRoutes as createSettingsRoutes } from './settings';
 import { createRoutes as createCurrenciesRoutes } from './currencies';
+import { createRoutes as createCountriesRoutes } from './countries';
 import { createRoutes as createBanksRoutes } from './banks';
 
 export type Route = {
@@ -19,5 +20,6 @@ export const AppRoutes: Route[] = [
   ...createLanguagesRoutes('languages'),
   ...createSettingsRoutes('settings'),
   ...createCurrenciesRoutes('currencies'),
+  ...createCountriesRoutes('countries'),
   ...createBanksRoutes('banks'),
 ];
