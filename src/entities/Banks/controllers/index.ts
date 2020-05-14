@@ -8,16 +8,18 @@ import { getManager } from 'typeorm';
 const getById = async (request: Request, response: Response) => {
   const banksRepository = getManager().getRepository(Banks);
 
-  const banks = await banksRepository.findOne(request.params.id);
+  const bank = await banksRepository.findOne(request.params.id, {
+    relations: ['country'],
+  });
 
-  if (!banks) {
+  if (!bank) {
     response.status(404);
     response.end();
 
     return;
   }
 
-  response.send(banks);
+  response.send(bank);
 };
 
 /**
@@ -26,7 +28,7 @@ const getById = async (request: Request, response: Response) => {
 const getAll = async (request: Request, response: Response) => {
   const banksRepository = getManager().getRepository(Banks);
 
-  const banks = await banksRepository.find();
+  const banks = await banksRepository.find({ relations: ['country'] });
 
   response.send(banks);
 };

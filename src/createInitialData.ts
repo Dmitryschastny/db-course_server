@@ -19,10 +19,10 @@ const setupBanks = async () => {
   const banksRepository = getManager().getRepository(Banks);
 
   await banksRepository.save([
-    { id: 1, name: 'Альфа-Банк', country: { id: 1 } },
-    { id: 2, name: 'Альфа-Банк', country: { id: 2 } },
-    { id: 3, name: 'МТБанк', country: { id: 2 } },
-    { id: 4, name: 'Приорбанк', country: { id: 2 } },
+    { id: 1, name: 'Альфа-Банк', country: { id: 2 } },
+    { id: 2, name: 'Альфа-Банк', country: { id: 3 } },
+    { id: 3, name: 'МТБанк', country: { id: 3 } },
+    { id: 4, name: 'Приорбанк', country: { id: 3 } },
   ]);
 };
 
