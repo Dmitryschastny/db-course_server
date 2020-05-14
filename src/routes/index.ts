@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { createRoutes as createUsersRoutes } from './users';
 import { createRoutes as createLanguagesRoutes } from './languages';
 import { createRoutes as createSettingsRoutes } from './settings';
+import { createRoutes as createCurrenciesRoutes } from './currencies';
 
 export type Route = {
   path: string;
@@ -16,4 +17,5 @@ export const AppRoutes: Route[] = [
   ...createUsersRoutes('users'),
   ...createLanguagesRoutes('languages'),
   ...createSettingsRoutes('settings'),
+  ...createCurrenciesRoutes('currencies'),
 ];

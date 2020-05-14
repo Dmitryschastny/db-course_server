@@ -1,3 +1,4 @@
+import { Currencies } from './../../Currencies/index';
 import { Settings } from './../../Settings/index';
 import { Request, Response } from 'express';
 import { getManager } from 'typeorm';
@@ -30,14 +31,49 @@ const create = async (request: Request, response: Response) => {
     where: { code: 'EN' },
   });
 
+  const currenciesRepository = getManager().getRepository(Currencies);
+  const defaultCurrency = await currenciesRepository.findOne({
+    where: { code: 'USD' },
+  });
+
   const settingsRepository = getManager().getRepository(Settings);
-  const settings = settingsRepository.create({ language: defaultLanguage });
+  const settings = settingsRepository.create({
+    language: defaultLanguage,
+    mainCurrency: defaultCurrency,
+  });
 
   const newUser = usersRepository.create({ ...request.body, settings });
 
   await usersRepository.save(newUser);
 
-  response.send(newUser);
+  response.send();
+};
+
+/**
+ * Updates given user.
+ */
+const update = async (request: Request, response: Response) => {
+  const usersRepository = getManager().getRepository(Users);
+
+  const { settings } = request.body;
+
+  const user = await usersRepository.findOne(request.params.id, {
+    relations: ['settings'],
+  });
+
+  const languagesRepository = getManager().getRepository(Languages);
+  const language = await languagesRepository.findOne(settings.languageId);
+
+  const currenciesRepository = getManager().getRepository(Currencies);
+  const mainCurrency = await currenciesRepository.findOne(
+    settings.mainCurrencyId
+  );
+
+  user.settings = { ...user.settings, ...settings, language, mainCurrency };
+
+  await usersRepository.save(user);
+
+  response.send();
 };
 
 /**
@@ -116,7 +152,7 @@ const me = async (request: VerifiedRequest, response: Response) => {
     where: {
       email,
     },
-    relations: ['settings', 'settings.language'],
+    relations: ['settings', 'settings.language', 'settings.mainCurrency'],
   });
 
   if (!user) {
@@ -126,7 +162,13 @@ const me = async (request: VerifiedRequest, response: Response) => {
     return;
   }
 
-  response.send({ user, language: settings.language });
+  response.send({
+    user,
+    settings: {
+      language: settings.language,
+      mainCurrency: settings.mainCurrency,
+    },
+  });
 };
 
-export { create, getAll, getById, auth, me };
+export { create, update, getAll, getById, auth, me };

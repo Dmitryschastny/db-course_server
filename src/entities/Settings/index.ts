@@ -21,11 +21,13 @@ export class Settings {
   @Column('integer', { name: 'pin', nullable: true })
   public pin: number;
 
-  @ManyToOne(() => Languages, languages => languages.settings)
+  @ManyToOne(() => Languages, languages => languages.settings, {
+    cascade: true,
+  })
   @JoinColumn([{ name: 'languageId', referencedColumnName: 'id' }])
   public language: Languages;
 
   @ManyToOne(() => Currencies, currencies => currencies.settings)
-  @JoinColumn([{ name: 'mainCurrency', referencedColumnName: 'id' }])
+  @JoinColumn([{ name: 'mainCurrencyId', referencedColumnName: 'id' }])
   public mainCurrency: Currencies;
 }

@@ -5,6 +5,7 @@ import {
   getById,
   auth,
   me,
+  update,
 } from '../entities/Users/controllers';
 
 export const createRoutes: CreateRoutes = (base: string): Route[] => [
@@ -18,6 +19,12 @@ export const createRoutes: CreateRoutes = (base: string): Route[] => [
     path: `/${base}/:id`,
     method: 'get',
     action: getById,
+    protected: true,
+  },
+  {
+    path: `/${base}/:id`,
+    method: 'put',
+    action: update,
     protected: true,
   },
   {
