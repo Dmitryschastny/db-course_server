@@ -19,6 +19,9 @@ export class Accounts {
   @PrimaryGeneratedColumn()
   public id: number;
 
+  @Column('character varying', { name: 'name', nullable: true })
+  public name: string | null;
+
   @Column('integer', { name: 'balance', default: 0 })
   public balance: number;
 

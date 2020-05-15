@@ -19,7 +19,13 @@ const create = async (
   try {
     const accountsRepository = getManager().getRepository(Accounts);
 
-    const { accountTypeId, currencyId, bankId, cardNumber } = request.body;
+    const {
+      accountTypeId,
+      currencyId,
+      bankId,
+      cardNumber,
+      name,
+    } = request.body;
 
     const currenciesRepository = getManager().getRepository(Currencies);
     const currency = await currenciesRepository.findOne(currencyId);
@@ -36,7 +42,7 @@ const create = async (
       where: { email },
     });
 
-    const newAccount: any = { currency, type, user };
+    const newAccount: any = { currency, type, user, name };
 
     if (accountTypeId === 2) {
       const banksRepository = getManager().getRepository(Banks);
@@ -77,10 +83,22 @@ const getById = async (request: Request<any>, response: Response) => {
 /**
  * Loads all accounts
  */
-const getAll = async (request: Request<any>, response: Response) => {
+const getAll = async (request: VerifiedRequest<any>, response: Response) => {
+  const {
+    decoded: { email },
+  } = request;
+
+  const usersRepository = getManager().getRepository(Users);
+  const user = await usersRepository.findOne(null, {
+    where: { email },
+  });
+
   const accountsRepository = getManager().getRepository(Accounts);
 
-  const accounts = await accountsRepository.find();
+  const accounts = await accountsRepository.find({
+    where: { user },
+    relations: ['card', 'currency', 'type'],
+  });
 
   response.send(accounts);
 };
