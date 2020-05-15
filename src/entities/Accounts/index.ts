@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Cards } from '../Cards';
 import { Currencies } from '../Currencies';
@@ -15,31 +16,33 @@ import { Transactions } from '../Transactions';
 @Index('accounts_pk', ['id'], { unique: true })
 @Entity('Accounts', { schema: 'public' })
 export class Accounts {
-  @Column('integer', { primary: true, name: 'id' })
+  @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column('integer', { name: 'balance', nullable: true })
-  public balance: number | null;
+  @Column('integer', { name: 'balance', default: 0 })
+  public balance: number;
 
-  @Column('boolean', { name: 'archived', nullable: true })
-  public archived: boolean | null;
+  @Column('boolean', { name: 'archived', default: false, nullable: true })
+  public archived: boolean;
 
-  @ManyToOne(() => Cards, (cards) => cards.accounts)
+  @ManyToOne(() => Cards, cards => cards.accounts, { nullable: true })
   @JoinColumn([{ name: 'cardId', referencedColumnName: 'id' }])
-  public card: Cards;
+  public card: Cards | null;
 
-  @ManyToOne(() => Currencies, (currencies) => currencies.accounts)
+  @ManyToOne(() => Currencies, currencies => currencies.accounts)
   @JoinColumn([{ name: 'currencyId', referencedColumnName: 'id' }])
   public currency: Currencies;
 
-  @ManyToOne(() => AccountTypes, (accountTypes) => accountTypes.accounts)
+  @ManyToOne(() => AccountTypes, accountTypes => accountTypes.accounts)
   @JoinColumn([{ name: 'typeId', referencedColumnName: 'id' }])
   public type: AccountTypes;
 
-  @ManyToOne(() => Users, (users) => users.accounts)
+  @ManyToOne(() => Users, users => users.accounts)
   @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
   public user: Users;
 
-  @OneToMany(() => Transactions, (transactions) => transactions.account)
-  public transactions: Transactions[];
+  @OneToMany(() => Transactions, transactions => transactions.account, {
+    nullable: true,
+  })
+  public transactions: Transactions[] | null;
 }

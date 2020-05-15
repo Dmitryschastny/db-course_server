@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request as ExpressRequest } from 'express';
 
 type DecodedToken = {
   email: string;
@@ -7,6 +7,10 @@ type DecodedToken = {
   iss: string;
 };
 
-export interface VerifiedRequest extends Request {
+export interface Request<T> extends ExpressRequest {
+  body: T;
+}
+
+export interface VerifiedRequest<T> extends Request<T> {
   decoded: DecodedToken;
 }

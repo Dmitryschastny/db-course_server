@@ -141,7 +141,7 @@ const auth = async (request: Request, response: Response) => {
 /**
  * Return user by token
  */
-const me = async (request: VerifiedRequest, response: Response) => {
+const me = async (request: VerifiedRequest<any>, response: Response) => {
   const {
     decoded: { email },
   } = request;

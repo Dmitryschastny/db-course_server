@@ -17,7 +17,7 @@ export class Cards {
   public id: number;
 
   @Column('character varying', { name: 'number', nullable: false })
-  public number: string;
+  public number: number;
 
   // @Column('character varying', { name: 'login', nullable: true })
   // public login: string | null;
