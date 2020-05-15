@@ -1,3 +1,4 @@
+import { TransactionTypes } from './entities/TransactionTypes/index';
 import { AccountTypes } from './entities/AccountTypes/index';
 import { Users } from './entities/Users';
 import { Banks } from './entities/Banks';
@@ -5,6 +6,19 @@ import { Countries } from './entities/Countries';
 import { Currencies } from './entities/Currencies';
 import { Languages } from './entities/Languages';
 import { getManager } from 'typeorm';
+
+const setupTransactionTypes = async () => {
+  const transactionTypesRepository = getManager().getRepository(
+    TransactionTypes
+  );
+
+  await transactionTypesRepository.save([
+    { id: 1, name: 'Expense' },
+    { id: 2, name: 'Income' },
+    { id: 3, name: 'Debt' },
+    { id: 4, name: 'Transfer' },
+  ]);
+};
 
 const setupAccountTypes = async () => {
   const accountTypesRepository = getManager().getRepository(AccountTypes);
@@ -80,6 +94,7 @@ const setupUsers = async () => {
 };
 
 const createInitialData = async () => {
+  await setupTransactionTypes();
   await setupAccountTypes();
   await setupCountries();
   await setupBanks();
