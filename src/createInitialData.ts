@@ -1,9 +1,20 @@
+import { AccountTypes } from './entities/AccountTypes/index';
 import { Users } from './entities/Users';
 import { Banks } from './entities/Banks';
 import { Countries } from './entities/Countries';
 import { Currencies } from './entities/Currencies';
 import { Languages } from './entities/Languages';
 import { getManager } from 'typeorm';
+
+const setupAccountTypes = async () => {
+  const accountTypesRepository = getManager().getRepository(AccountTypes);
+
+  await accountTypesRepository.save([
+    { id: 1, name: 'Cash' },
+    { id: 2, name: 'Card' },
+    { id: 3, name: 'Debt' },
+  ]);
+};
 
 const setupCountries = async () => {
   const countriesRepository = getManager().getRepository(Countries);
@@ -69,6 +80,7 @@ const setupUsers = async () => {
 };
 
 const createInitialData = async () => {
+  await setupAccountTypes();
   await setupCountries();
   await setupBanks();
   await setupLanguages();

@@ -5,6 +5,7 @@ import { createRoutes as createSettingsRoutes } from './settings';
 import { createRoutes as createCurrenciesRoutes } from './currencies';
 import { createRoutes as createCountriesRoutes } from './countries';
 import { createRoutes as createBanksRoutes } from './banks';
+import { createRoutes as createAccountTypesRoutes } from './accountTypes';
 
 export type Route = {
   path: string;
@@ -22,4 +23,5 @@ export const AppRoutes: Route[] = [
   ...createCurrenciesRoutes('currencies'),
   ...createCountriesRoutes('countries'),
   ...createBanksRoutes('banks'),
+  ...createAccountTypesRoutes('account-types'),
 ];
