@@ -10,6 +10,6 @@ export class TransactionTypes {
   @Column('character varying', { name: 'name', nullable: true })
   public name: string | null;
 
-  @OneToMany(() => Transactions, (transactions) => transactions.type)
+  @OneToMany(() => Transactions, transactions => transactions.type)
   public transactions: Transactions[];
 }
