@@ -83,7 +83,6 @@ const setupAccountTypes = async () => {
   await accountTypesRepository.save([
     { id: 1, name: 'Cash' },
     { id: 2, name: 'Card' },
-    { id: 3, name: 'Debt' },
   ]);
 };
 
