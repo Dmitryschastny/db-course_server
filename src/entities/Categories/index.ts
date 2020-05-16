@@ -16,8 +16,8 @@ export class Categories {
   @Column('integer', { primary: true, name: 'id' })
   public id: number;
 
-  @Column('character varying', { name: 'name', nullable: true })
-  public name: string | null;
+  @Column('character varying', { name: 'name' })
+  public name: string;
 
   @ManyToOne(() => Icons, icons => icons.categories, { nullable: true })
   @JoinColumn([{ name: 'iconId', referencedColumnName: 'id' }])

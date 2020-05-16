@@ -17,6 +17,8 @@ const start = async () => {
     app.use(cors());
     app.use(bodyParser.json());
 
+    app.use(express.static('public'));
+
     AppRoutes.forEach(route => {
       const registerRoute = async (
         request: Request,

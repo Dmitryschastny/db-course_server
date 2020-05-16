@@ -8,7 +8,9 @@ import { getManager } from 'typeorm';
 const getById = async (request: Request, response: Response) => {
   const categoriesRepository = getManager().getRepository(Categories);
 
-  const category = await categoriesRepository.findOne(request.params.id);
+  const category = await categoriesRepository.findOne(request.params.id, {
+    relations: ['icon', 'transactionType'],
+  });
 
   if (!category) {
     response.status(404);
@@ -26,7 +28,9 @@ const getById = async (request: Request, response: Response) => {
 const getAll = async (request: Request, response: Response) => {
   const categoriesRepository = getManager().getRepository(Categories);
 
-  const categories = await categoriesRepository.find();
+  const categories = await categoriesRepository.find({
+    relations: ['icon', 'transactionType'],
+  });
 
   response.send(categories);
 };

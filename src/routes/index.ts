@@ -10,6 +10,7 @@ import { createRoutes as createCardsRoutes } from './cards';
 import { createRoutes as createAccountsRoutes } from './accounts';
 import { createRoutes as createTransactionTypesRoutes } from './transactionTypes';
 import { createRoutes as createCategoriesRoutes } from './categories';
+import { createRoutes as createIconsRoutes } from './icons';
 
 export type Route = {
   path: string;
@@ -32,4 +33,5 @@ export const AppRoutes: Route[] = [
   ...createAccountsRoutes('accounts'),
   ...createTransactionTypesRoutes('transaction-types'),
   ...createCategoriesRoutes('categories'),
+  ...createIconsRoutes('icons'),
 ];
