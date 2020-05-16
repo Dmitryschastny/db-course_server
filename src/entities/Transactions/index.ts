@@ -21,30 +21,30 @@ export class Transactions {
   @Column('timestamp without time zone', { name: 'date', nullable: true })
   public date: Date | null;
 
-  @ManyToOne(() => Accounts, (accounts) => accounts.transactions)
+  @ManyToOne(() => Accounts, accounts => accounts.transactions)
   @JoinColumn([{ name: 'accountId', referencedColumnName: 'id' }])
   public account: Accounts;
 
-  @ManyToOne(() => Categories, (categories) => categories.transactions)
+  @ManyToOne(() => Categories, categories => categories.transactions)
   @JoinColumn([{ name: 'categoryId', referencedColumnName: 'id' }])
   public category: Categories;
 
-  @ManyToOne(() => Currencies, (currencies) => currencies.transactions)
+  @ManyToOne(() => Currencies, currencies => currencies.transactions)
   @JoinColumn([{ name: 'currencyId', referencedColumnName: 'id' }])
   public currency: Currencies;
 
-  @ManyToOne(() => Places, (places) => places.transactions)
+  @ManyToOne(() => Places, places => places.transactions)
   @JoinColumn([{ name: 'placeId', referencedColumnName: 'id' }])
   public place: Places;
 
   @ManyToOne(
     () => TransactionTypes,
-    (transactionTypes) => transactionTypes.transactions
+    transactionTypes => transactionTypes.transactions
   )
   @JoinColumn([{ name: 'typeId', referencedColumnName: 'id' }])
   public type: TransactionTypes;
 
-  @ManyToOne(() => ExchangeRates, (exchangeRates) => exchangeRates.transactions)
+  @ManyToOne(() => ExchangeRates, exchangeRates => exchangeRates.transactions)
   @JoinColumn([{ name: 'exchangeRateId', referencedColumnName: 'id' }])
   public exchangeRate: ExchangeRates;
 }

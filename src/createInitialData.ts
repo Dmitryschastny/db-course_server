@@ -1,3 +1,4 @@
+import { Categories } from './entities/Categories/index';
 import { TransactionTypes } from './entities/TransactionTypes/index';
 import { AccountTypes } from './entities/AccountTypes/index';
 import { Users } from './entities/Users';
@@ -6,6 +7,31 @@ import { Countries } from './entities/Countries';
 import { Currencies } from './entities/Currencies';
 import { Languages } from './entities/Languages';
 import { getManager } from 'typeorm';
+
+const setupCategories = async () => {
+  const categoriesRepository = getManager().getRepository(Categories);
+
+  await categoriesRepository.save([
+    // Expense
+    { id: 1, name: 'Auto', transactionType: { id: 1 } },
+    { id: 2, name: 'Transport', transactionType: { id: 1 } },
+    { id: 3, name: 'Bills', transactionType: { id: 1 } },
+    { id: 4, name: 'Eating out', transactionType: { id: 1 } },
+    { id: 5, name: 'Education', transactionType: { id: 1 } },
+    { id: 6, name: 'Education', transactionType: { id: 1 } },
+    { id: 7, name: 'Entertaining', transactionType: { id: 1 } },
+    { id: 8, name: 'Gifts', transactionType: { id: 1 } },
+    { id: 9, name: 'Groceries', transactionType: { id: 1 } },
+    { id: 10, name: 'Health', transactionType: { id: 1 } },
+    { id: 11, name: 'Kids', transactionType: { id: 1 } },
+    { id: 12, name: 'Personal Care', transactionType: { id: 1 } },
+    { id: 13, name: 'Shopping', transactionType: { id: 1 } },
+
+    // Income
+    { id: 14, name: 'Birthday', transactionType: { id: 2 } },
+    { id: 15, name: 'Salary', transactionType: { id: 2 } },
+  ]);
+};
 
 const setupTransactionTypes = async () => {
   const transactionTypesRepository = getManager().getRepository(
@@ -95,6 +121,7 @@ const setupUsers = async () => {
 
 const createInitialData = async () => {
   await setupTransactionTypes();
+  await setupCategories();
   await setupAccountTypes();
   await setupCountries();
   await setupBanks();
