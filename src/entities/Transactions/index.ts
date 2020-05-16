@@ -1,4 +1,11 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Accounts } from '../Accounts';
 import { Categories } from '../Categories';
 import { Currencies } from '../Currencies';
@@ -9,7 +16,7 @@ import { ExchangeRates } from '../ExchangeRates';
 @Index('transactions_pk', ['id'], { unique: true })
 @Entity('Transactions', { schema: 'public' })
 export class Transactions {
-  @Column('integer', { primary: true, name: 'id' })
+  @PrimaryGeneratedColumn()
   public id: number;
 
   @Column('integer', { name: 'amount', nullable: true })
