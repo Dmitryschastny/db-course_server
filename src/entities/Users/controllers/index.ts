@@ -158,6 +158,7 @@ const me = async (request: VerifiedRequest<any>, response: Response) => {
       'settings.mainCurrency',
       'accounts',
       'accounts.card',
+      'accounts.card.bank',
       'accounts.currency',
       'accounts.type',
     ],

@@ -97,7 +97,7 @@ const getAll = async (request: VerifiedRequest<any>, response: Response) => {
 
   const accounts = await accountsRepository.find({
     where: { user },
-    relations: ['card', 'currency', 'type'],
+    relations: ['card', 'card.bank', 'currency', 'type'],
   });
 
   response.send(accounts);
