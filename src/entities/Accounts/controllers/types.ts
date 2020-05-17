@@ -5,3 +5,7 @@ export type CreateAccountRequest = {
   bankId?: number;
   cardNumber?: number;
 };
+
+export interface UpdateAccountRequest extends CreateAccountRequest {
+  balance: number;
+}

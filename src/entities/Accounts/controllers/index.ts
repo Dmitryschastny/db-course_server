@@ -2,7 +2,7 @@ import { Banks } from './../../Banks/index';
 import { AccountTypes } from './../../AccountTypes';
 import { Currencies } from './../../Currencies';
 import { Cards } from './../../Cards';
-import { CreateAccountRequest } from './types';
+import { CreateAccountRequest, UpdateAccountRequest } from './types';
 import { Accounts } from './../';
 import { Response } from 'express';
 import { Request, VerifiedRequest } from '../../../types';
@@ -63,8 +63,49 @@ const create = async (
   }
 };
 
-const update = async (request: Request<any>, response: Response) => {
-  console.log('kek');
+const update = async (
+  request: Request<UpdateAccountRequest>,
+  response: Response
+) => {
+  try {
+    const {
+      name,
+      balance,
+      accountTypeId,
+      currencyId,
+      bankId,
+      cardNumber,
+    } = request.body;
+
+    const accountsRepository = getManager().getRepository(Accounts);
+
+    let account = await accountsRepository.findOne(request.params.id, {
+      relations: ['card', 'card.bank', 'currency', 'type'],
+    });
+
+    account.name = name;
+    account.balance = balance;
+    account.type = { id: accountTypeId } as AccountTypes;
+    account.currency = { id: currencyId } as Currencies;
+
+    account.card = {
+      ...account.card,
+      bank: {
+        id: bankId,
+      } as Banks,
+      number: cardNumber,
+    } as Cards;
+
+    await accountsRepository.save(account);
+    account = await accountsRepository.findOne(request.params.id, {
+      relations: ['card', 'card.bank', 'currency', 'type'],
+    });
+
+    response.send(account);
+  } catch (error) {
+    console.log(error);
+    response.send(400);
+  }
 };
 
 /**
