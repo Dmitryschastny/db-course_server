@@ -47,7 +47,7 @@ const getAll = async (request: VerifiedRequest<any>, response: Response) => {
     where: {
       account: In(user.accounts.map(a => a.id)),
     },
-    relations: ['category', 'category.icon', 'place', 'type'],
+    relations: ['category', 'category.icon', 'place', 'type', 'account'],
     order: {
       date: 'DESC',
     },
@@ -114,9 +114,13 @@ const create = async (
     }
 
     const transactionsRepository = getManager().getRepository(Transactions);
-    await transactionsRepository.save(newTransaction);
+    const { id } = await transactionsRepository.save(newTransaction);
 
-    response.send(newTransaction);
+    const result = await transactionsRepository.findOne(id, {
+      relations: ['category', 'category.icon', 'place', 'type', 'account'],
+    });
+
+    response.send(result);
   } catch (error) {
     console.log(error);
     response.sendStatus(400);
