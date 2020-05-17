@@ -152,7 +152,15 @@ const me = async (request: VerifiedRequest<any>, response: Response) => {
     where: {
       email,
     },
-    relations: ['settings', 'settings.language', 'settings.mainCurrency'],
+    relations: [
+      'settings',
+      'settings.language',
+      'settings.mainCurrency',
+      'accounts',
+      'accounts.card',
+      'accounts.currency',
+      'accounts.type',
+    ],
   });
 
   if (!user) {
@@ -163,11 +171,15 @@ const me = async (request: VerifiedRequest<any>, response: Response) => {
   }
 
   response.send({
-    user,
+    user: {
+      id: user.id,
+      email: user.email,
+    },
     settings: {
       language: settings.language,
       mainCurrency: settings.mainCurrency,
     },
+    accounts: user.accounts,
   });
 };
 

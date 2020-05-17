@@ -48,6 +48,9 @@ const getAll = async (request: VerifiedRequest<any>, response: Response) => {
       account: In(user.accounts.map(a => a.id)),
     },
     relations: ['category', 'category.icon', 'place', 'type'],
+    order: {
+      date: 'DESC',
+    },
   });
 
   response.send(transactions);
