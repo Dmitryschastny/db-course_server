@@ -53,13 +53,18 @@ const create = async (
       newAccount.card = card;
     }
 
-    await accountsRepository.save(newAccount);
+    const account = await accountsRepository.save(newAccount);
+    delete account.user;
 
-    response.send(newAccount);
+    response.send(account);
   } catch (error) {
     console.log(error);
     response.send(400);
   }
+};
+
+const update = async (request: Request<any>, response: Response) => {
+  console.log('kek');
 };
 
 /**
@@ -103,4 +108,19 @@ const getAll = async (request: VerifiedRequest<any>, response: Response) => {
   response.send(accounts);
 };
 
-export { getById, getAll, create };
+/**
+ * Loads accounts by id
+ */
+const deleteById = async (request: Request<any>, response: Response) => {
+  const accountsRepository = getManager().getRepository(Accounts);
+
+  try {
+    await accountsRepository.delete(request.params.id);
+    response.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    response.sendStatus(400);
+  }
+};
+
+export { getById, getAll, create, update, deleteById };
