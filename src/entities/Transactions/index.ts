@@ -28,7 +28,9 @@ export class Transactions {
   @Column('timestamp without time zone', { name: 'date', nullable: true })
   public date: Date | null;
 
-  @ManyToOne(() => Accounts, accounts => accounts.transactions)
+  @ManyToOne(() => Accounts, accounts => accounts.transactions, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn([{ name: 'accountId', referencedColumnName: 'id' }])
   public account: Accounts;
 
