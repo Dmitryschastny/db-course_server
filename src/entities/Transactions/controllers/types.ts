@@ -7,3 +7,5 @@ export type CreateTransactionRequest = {
   categoryId?: number;
   place?: string;
 };
+
+export type UpdateTransactionRequest = CreateTransactionRequest;

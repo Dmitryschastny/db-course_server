@@ -141,7 +141,7 @@ const setupUsers = async () => {
     email: 'test@test.test',
     password: '123456',
     settings: {
-      id: 0,
+      id: 1,
       language: { id: 1 },
       mainCurrency: { id: 1 },
     },

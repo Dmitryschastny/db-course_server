@@ -6,7 +6,7 @@ import { Transactions } from '../';
 import { Response } from 'express';
 import { getManager, In } from 'typeorm';
 import { Request, VerifiedRequest } from '../../../types';
-import { CreateTransactionRequest } from './types';
+import { CreateTransactionRequest, UpdateTransactionRequest } from './types';
 import { Users } from '../../Users';
 
 /**
@@ -127,4 +127,72 @@ const create = async (
   }
 };
 
-export { getById, getAll, create };
+const update = async (
+  request: Request<UpdateTransactionRequest>,
+  response: Response
+) => {
+  try {
+    const {
+      amount,
+      typeId,
+      accountId,
+      date,
+      note,
+      categoryId,
+      place,
+    } = request.body;
+
+    const transactionsRepository = getManager().getRepository(Transactions);
+    const transaction = await transactionsRepository.findOne(
+      request.params.id,
+      {
+        relations: ['category', 'category.icon', 'place', 'type', 'account'],
+      }
+    );
+
+    transaction.amount = amount;
+    transaction.type = { id: typeId } as TransactionTypes;
+    transaction.account = { id: accountId } as Accounts;
+    transaction.date = new Date(date);
+    transaction.note = note;
+    transaction.category = { id: categoryId } as Categories;
+
+    if (place) {
+      const placesRepository = getManager().getRepository(Places);
+      let placeEntity = await placesRepository.findOne({
+        where: { name: place },
+      });
+
+      if (!placeEntity) {
+        placeEntity = await placesRepository.save({ name: place });
+      }
+
+      transaction.place = placeEntity;
+    }
+
+    await transactionsRepository.save(transaction);
+
+    const result = await transactionsRepository.findOne(request.params.id, {
+      relations: ['category', 'category.icon', 'place', 'type', 'account'],
+    });
+
+    response.send(result);
+  } catch (error) {
+    console.log(error);
+    response.sendStatus(400);
+  }
+};
+
+const deleteById = async (request: Request<any>, response: Response) => {
+  const transactionsRepository = getManager().getRepository(Transactions);
+
+  try {
+    await transactionsRepository.delete(request.params.id);
+    response.sendStatus(204);
+  } catch (error) {
+    console.log(error);
+    response.sendStatus(400);
+  }
+};
+
+export { getById, getAll, create, update, deleteById };
