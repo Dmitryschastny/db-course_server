@@ -15,12 +15,6 @@ export class Settings {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column('boolean', { name: 'usePin', nullable: true })
-  public usePin: boolean | null;
-
-  @Column('integer', { name: 'pin', nullable: true })
-  public pin: number;
-
   @ManyToOne(() => Languages, languages => languages.settings, {
     cascade: true,
   })

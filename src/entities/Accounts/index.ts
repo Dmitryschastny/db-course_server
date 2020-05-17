@@ -25,9 +25,6 @@ export class Accounts {
   @Column('integer', { name: 'balance', default: 0 })
   public balance: number;
 
-  @Column('boolean', { name: 'archived', default: false, nullable: true })
-  public archived: boolean;
-
   @ManyToOne(() => Cards, cards => cards.accounts, { nullable: true })
   @JoinColumn([{ name: 'cardId', referencedColumnName: 'id' }])
   public card: Cards | null;

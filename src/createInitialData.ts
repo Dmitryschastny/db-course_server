@@ -142,7 +142,6 @@ const setupUsers = async () => {
     password: '123456',
     settings: {
       id: 0,
-      usePin: false,
       language: { id: 1 },
       mainCurrency: { id: 1 },
     },

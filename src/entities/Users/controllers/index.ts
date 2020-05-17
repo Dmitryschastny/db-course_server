@@ -69,7 +69,7 @@ const update = async (request: Request, response: Response) => {
     settings.mainCurrencyId
   );
 
-  user.settings = { ...user.settings, ...settings, language, mainCurrency };
+  user.settings = { ...user.settings, language, mainCurrency };
 
   await usersRepository.save(user);
 
