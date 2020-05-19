@@ -1,3 +1,4 @@
+import { Roles } from './entities/Roles/index';
 import { Icons } from './entities/Icons/index';
 import { Categories } from './entities/Categories/index';
 import { TransactionTypes } from './entities/TransactionTypes/index';
@@ -8,6 +9,15 @@ import { Countries } from './entities/Countries';
 import { Currencies } from './entities/Currencies';
 import { Languages } from './entities/Languages';
 import { getManager } from 'typeorm';
+
+const setupRoles = async () => {
+  const rolesRepository = getManager().getRepository(Roles);
+
+  await rolesRepository.save([
+    { id: 1, name: 'Admin' },
+    { id: 2, name: 'Basic user' },
+  ]);
+};
 
 const setupTransactionTypes = async () => {
   const transactionTypesRepository = getManager().getRepository(
@@ -145,10 +155,12 @@ const setupUsers = async () => {
       language: { id: 1 },
       mainCurrency: { id: 1 },
     },
+    role: { id: 2 },
   });
 };
 
 const createInitialData = async () => {
+  await setupRoles();
   await setupTransactionTypes();
   await setupIcons();
   await setupCategories();

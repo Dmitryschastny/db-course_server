@@ -11,7 +11,6 @@ import { Categories } from '../Categories';
 import { Currencies } from '../Currencies';
 import { Places } from '../Places';
 import { TransactionTypes } from '../TransactionTypes';
-import { ExchangeRates } from '../ExchangeRates';
 
 @Index('transactions_pk', ['id'], { unique: true })
 @Entity('Transactions', { schema: 'public' })
@@ -52,8 +51,4 @@ export class Transactions {
   )
   @JoinColumn([{ name: 'typeId', referencedColumnName: 'id' }])
   public type: TransactionTypes;
-
-  @ManyToOne(() => ExchangeRates, exchangeRates => exchangeRates.transactions)
-  @JoinColumn([{ name: 'exchangeRateId', referencedColumnName: 'id' }])
-  public exchangeRate: ExchangeRates;
 }
