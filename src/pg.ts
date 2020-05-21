@@ -5,9 +5,9 @@ const createConvertCurrencyFunction = async (pool: Pool) => {
     CREATE OR REPLACE FUNCTION public.convert_currency(
       currency_from varchar,
       currency_to varchar,
-      amount real
+      amount float8
     )
-    RETURNS real
+    RETURNS float8
     LANGUAGE plpgsql
     AS $function$
     declare 
@@ -37,7 +37,7 @@ const createCalcUserBalanceFunction = async (pool: Pool) => {
       userid integer,
       currency varchar
     )
-    RETURNS real
+    RETURNS float8
     LANGUAGE plpgsql
     AS $function$
     begin

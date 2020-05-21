@@ -28,8 +28,6 @@ const setupTransactionTypes = async () => {
   await transactionTypesRepository.save([
     { id: 1, name: 'Expense' },
     { id: 2, name: 'Income' },
-    { id: 3, name: 'Debt' },
-    { id: 4, name: 'Transfer' },
   ]);
 };
 
