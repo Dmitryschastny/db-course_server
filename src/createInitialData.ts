@@ -134,11 +134,13 @@ const setupCurrencies = async () => {
       id: 1,
       name: 'United States Dollar',
       code: 'USD',
+      exchangeFactor: 1,
     },
     {
       id: 2,
       name: 'Belarusian ruble',
       code: 'BYN',
+      exchangeFactor: 0.42,
     },
   ]);
 };
@@ -146,17 +148,30 @@ const setupCurrencies = async () => {
 const setupUsers = async () => {
   const usersRepository = getManager().getRepository(Users);
 
-  await usersRepository.save({
-    id: 1,
-    email: 'test@test.test',
-    password: '123456',
-    settings: {
+  await usersRepository.save([
+    {
       id: 1,
-      language: { id: 1 },
-      mainCurrency: { id: 1 },
+      email: 'test@test.test',
+      password: '123456',
+      settings: {
+        id: 1,
+        language: { id: 1 },
+        mainCurrency: { id: 1 },
+      },
+      role: { id: 2 },
     },
-    role: { id: 2 },
-  });
+    {
+      id: 2,
+      email: 'admin@admin.admin',
+      password: '123456',
+      settings: {
+        id: 2,
+        language: { id: 1 },
+        mainCurrency: { id: 1 },
+      },
+      role: { id: 1 },
+    },
+  ]);
 };
 
 const createInitialData = async () => {

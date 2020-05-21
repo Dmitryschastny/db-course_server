@@ -82,7 +82,7 @@ const update = async (request: Request, response: Response) => {
 const getAll = async (request: Request, response: Response) => {
   const usersRepository = getManager().getRepository(Users);
 
-  const users = await usersRepository.find();
+  const users = await usersRepository.find({ relations: ['role'] });
 
   response.send(users);
 };
@@ -161,6 +161,7 @@ const me = async (request: VerifiedRequest<any>, response: Response) => {
       'accounts.card.bank',
       'accounts.currency',
       'accounts.type',
+      'role',
     ],
   });
 
@@ -175,6 +176,7 @@ const me = async (request: VerifiedRequest<any>, response: Response) => {
     user: {
       id: user.id,
       email: user.email,
+      role: user.role,
     },
     settings: {
       language: settings.language,

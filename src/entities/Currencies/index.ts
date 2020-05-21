@@ -21,6 +21,9 @@ export class Currencies {
   @Column('character varying', { name: 'code', nullable: true })
   public code: string | null;
 
+  @Column('float', { name: 'exchangeFactor', nullable: false })
+  public exchangeFactor: number;
+
   @OneToMany(() => Accounts, accounts => accounts.currency)
   public accounts: Accounts[];
 
