@@ -18,7 +18,7 @@ export class Transactions {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column('integer', { name: 'amount', nullable: true })
+  @Column('float', { name: 'amount', nullable: true })
   public amount: number | null;
 
   @Column('character varying', { name: 'note', nullable: true })

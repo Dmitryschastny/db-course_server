@@ -47,7 +47,14 @@ const getAll = async (request: VerifiedRequest<any>, response: Response) => {
     where: {
       account: In(user.accounts.map(a => a.id)),
     },
-    relations: ['category', 'category.icon', 'place', 'type', 'account'],
+    relations: [
+      'category',
+      'category.icon',
+      'place',
+      'type',
+      'account',
+      'account.currency',
+    ],
     order: {
       date: 'DESC',
     },
@@ -117,7 +124,14 @@ const create = async (
     const { id } = await transactionsRepository.save(newTransaction);
 
     const result = await transactionsRepository.findOne(id, {
-      relations: ['category', 'category.icon', 'place', 'type', 'account'],
+      relations: [
+        'category',
+        'category.icon',
+        'place',
+        'type',
+        'account',
+        'account.currency',
+      ],
     });
 
     response.send(result);
@@ -146,7 +160,14 @@ const update = async (
     const transaction = await transactionsRepository.findOne(
       request.params.id,
       {
-        relations: ['category', 'category.icon', 'place', 'type', 'account'],
+        relations: [
+          'category',
+          'category.icon',
+          'place',
+          'type',
+          'account',
+          'account.currency',
+        ],
       }
     );
 
@@ -173,7 +194,14 @@ const update = async (
     await transactionsRepository.save(transaction);
 
     const result = await transactionsRepository.findOne(request.params.id, {
-      relations: ['category', 'category.icon', 'place', 'type', 'account'],
+      relations: [
+        'category',
+        'category.icon',
+        'place',
+        'type',
+        'account',
+        'account.currency',
+      ],
     });
 
     response.send(result);

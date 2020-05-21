@@ -70,7 +70,6 @@ const update = async (
   try {
     const {
       name,
-      balance,
       accountTypeId,
       currencyId,
       bankId,
@@ -84,17 +83,20 @@ const update = async (
     });
 
     account.name = name;
-    account.balance = balance;
     account.type = { id: accountTypeId } as AccountTypes;
     account.currency = { id: currencyId } as Currencies;
 
-    account.card = {
-      ...account.card,
-      bank: {
-        id: bankId,
-      } as Banks,
-      number: cardNumber,
-    } as Cards;
+    if (bankId) {
+      account.card = {
+        ...account.card,
+        bank: {
+          id: bankId,
+        } as Banks,
+        number: cardNumber,
+      } as Cards;
+    } else {
+      account.card = undefined;
+    }
 
     await accountsRepository.save(account);
     account = await accountsRepository.findOne(request.params.id, {
