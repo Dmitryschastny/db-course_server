@@ -9,7 +9,7 @@ import { Countries } from './entities/Countries';
 import { Currencies } from './entities/Currencies';
 import { Languages } from './entities/Languages';
 import { getManager } from 'typeorm';
-import { createFunctions } from './pg';
+import { init } from './pg';
 
 const setupRoles = async () => {
   const rolesRepository = getManager().getRepository(Roles);
@@ -185,7 +185,7 @@ const createInitialData = async () => {
   await setupCurrencies();
   await setupUsers();
 
-  await createFunctions();
+  await init();
 };
 
 export { createInitialData };
