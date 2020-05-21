@@ -6,6 +6,7 @@ import {
   auth,
   me,
   update,
+  getBalance,
 } from '../entities/Users/controllers';
 
 export const createRoutes: CreateRoutes = (base: string): Route[] => [
@@ -41,6 +42,12 @@ export const createRoutes: CreateRoutes = (base: string): Route[] => [
     path: '/me',
     method: 'post',
     action: me,
+    protected: true,
+  },
+  {
+    path: '/balance',
+    method: 'get',
+    action: getBalance,
     protected: true,
   },
 ];

@@ -22,7 +22,7 @@ export class Accounts {
   @Column('character varying', { name: 'name', nullable: true })
   public name: string | null;
 
-  @Column('integer', { name: 'balance', default: 0 })
+  @Column('float', { name: 'balance', default: 0 })
   public balance: number;
 
   @ManyToOne(() => Cards, cards => cards.accounts, { nullable: true })

@@ -6,6 +6,7 @@ import { Users } from '..';
 import * as jwt from 'jsonwebtoken';
 import { VerifiedRequest } from '../../../types';
 import { Languages } from '../../Languages';
+import { calcUserBalanceQuery } from '../../../pg';
 
 /**
  * Saves given user.
@@ -186,4 +187,30 @@ const me = async (request: VerifiedRequest<any>, response: Response) => {
   });
 };
 
-export { create, update, getAll, getById, auth, me };
+const getBalance = async (
+  request: VerifiedRequest<any>,
+  response: Response
+) => {
+  try {
+    const {
+      decoded: { email },
+    } = request;
+
+    const usersRepository = getManager().getRepository(Users);
+    const user = await usersRepository.findOne(null, {
+      where: { email },
+      relations: ['settings', 'settings.mainCurrency'],
+    });
+
+    const [result] = await getManager().query(
+      calcUserBalanceQuery(user.id, user.settings.mainCurrency.code)
+    );
+
+    response.send({ balance: result.calc_user_balance || 0 });
+  } catch (error) {
+    console.log(error);
+    response.sendStatus(400);
+  }
+};
+
+export { create, update, getAll, getById, auth, me, getBalance };
