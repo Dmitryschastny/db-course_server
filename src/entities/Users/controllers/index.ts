@@ -43,7 +43,7 @@ const create = async (request: Request, response: Response) => {
     mainCurrency: defaultCurrency,
   });
 
-  const newUser = usersRepository.create({ ...request.body, settings });
+  const newUser = usersRepository.create({ ...request.body, settings, role:{id: 2} });
 
   await usersRepository.save(newUser);
 
